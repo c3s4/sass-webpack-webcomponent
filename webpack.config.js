@@ -14,7 +14,7 @@ module.exports = {
 	    {
           // Only run `.js` files through Babel
 	      test: /\.js?$/,
-	      use: "babel-loader",
+	      loader: "babel-loader",
 
 	      // Skip any files outside of your project's `app` directory
 	      include: [
@@ -24,7 +24,7 @@ module.exports = {
 
         {
             test: /\.scss$/,
-            loaders: ["style-loader", "css-loader", "sass-loader"]
+            use: ['style-loader', 'css-loader', 'sass-loader']
         }
   	]
   }
