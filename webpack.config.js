@@ -1,18 +1,22 @@
 /* eslint-disable */
 var path = require('path');
 var webpack = require('webpack');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+var extractCSS = new ExtractTextPlugin('bundle.css');
+
 
 module.exports = {
-  entry: './app/index.js',
+  entry: ['./app/index.js'],
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].bundle.js',
+    filename: 'bundle.js',
     publicPath: '/app'
   },
   module: {
   	rules: [
 	    {
-          // Only run `.js` files through Babel
+        // Only run `.js` files through Babel
 	      test: /\.js?$/,
 	      loader: "babel-loader",
 
@@ -23,9 +27,15 @@ module.exports = {
 	    },
 
         {
-            test: /\.scss$/,
-            use: ['style-loader', 'css-loader', 'sass-loader']
+          test: /\.scss$/i,
+          exclude: [
+            path.resolve(__dirname, "node_modules")
+          ],
+          loader: extractCSS.extract(['css-loader', 'sass-loader'])
         }
   	]
-  }
+  },
+  plugins: [
+    extractCSS
+  ]
 };
